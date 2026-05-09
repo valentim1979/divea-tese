@@ -1,7 +1,92 @@
-data/raw/
-data/processed/
-models/
-outputs/
+# =========================
+# Python
+# =========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# =========================
+# Jupyter
+# =========================
 .ipynb_checkpoints/
+
+# =========================
+# Ambientes
+# =========================
+.env
+.venv/
+venv/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Modelos treinados
+# =========================
+models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# =========================
+# Dados
+# =========================
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.feather
+*.pkl
+*.joblib
+
+# =========================
+# Outputs e figuras
+# =========================
+outputs/
+figures/
+reports/
+
+# =========================
+# PyTorch Lightning
+# =========================
+lightning_logs/
+
+# =========================
+# Sistema operacional
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VSCode
+# =========================
+.vscode/
+
+# =========================
+# RStudio
+# =========================
+.Rhistory
+.RData
+.Ruserdata
+
+# =========================
+# Quarto / cache
+# =========================
+.quarto/
+_cache/
+
+# =========================
+# ChromaDB / embeddings
+# =========================
+chromadb/
+embeddings/
+
+# =========================
+# Docker
+# =========================
+docker-data/
