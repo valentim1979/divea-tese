@@ -137,6 +137,17 @@ vsr_count = int((df_ano['PCR_VSR'] == '1').sum())
 # Previsão TFT
 st.header("Previsão TFT — Próximas 4 Semanas")
 
+with st.expander("ℹ️ Como funciona a previsão TFT?"):
+    st.markdown("""
+    **O que é o TFT?** Modelo de IA treinado com dados históricos de SRAG do Paraná (2019-2026).
+
+    **Como prevê?** Analisa as últimas semanas e padrões sazonais para estimar casos nas próximas 4 semanas.
+
+    **Intervalos de confiança (IC90):** 90% de probabilidade do valor real cair entre P10 e P90.
+
+    **Quando atualizar?** Após novos dados do SIVEP-Gripe, rode: `atualizar_previsoes.sh`
+    """)
+
 try:
     df_prev = pd.read_parquet('/home/valentim/divea/data/processed/previsoes_tft.parquet')
 

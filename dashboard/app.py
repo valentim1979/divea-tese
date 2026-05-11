@@ -165,6 +165,18 @@ with col3:
     for i, v in enumerate(pred_vsr):
         st.metric(f"Semana +{i+1}", f"{max(0, int(v)):,}")
         
+# Expander TFT
+with st.expander("ℹ️ Como funciona a previsão TFT?"):
+    st.markdown("""
+    **O que é o TFT?** Modelo de IA treinado com dados históricos de SRAG do Paraná (2019-2026).
+
+    **Como prevê?** Analisa as últimas semanas e padrões sazonais para estimar casos nas próximas 4 semanas.
+
+    **Intervalos de confiança (IC90):** 90% de probabilidade do valor real cair entre P10 e P90.
+
+    **Quando atualizar?** Após novos dados do SIVEP-Gripe, rode: `atualizar_previsoes.sh`
+    """)
+
 # Previsao TFT
 st.header("Previsao TFT — Proximas 4 Semanas")
 st.caption("Modelo Temporal Fusion Transformer com intervalos de confianca (P10-P90)")
