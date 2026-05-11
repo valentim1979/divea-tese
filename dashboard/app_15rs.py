@@ -168,3 +168,14 @@ try:
             )
 except Exception as e:
     st.warning(f"Previsões não disponíveis: {e}")
+
+# Interpretacao automatica Ollama
+st.header("Interpretação Epidemiológica Automatizada")
+st.caption("Gerada pelo modelo divea-biostats (Qwen2.5 14B)")
+
+try:
+    with open('/home/valentim/divea/data/processed/interpretacao_tft_15rs.txt', 'r') as f:
+        interpretacao = f.read()
+    st.info(interpretacao)
+except:
+    st.warning("Interpretação não disponível. Rode: python gerar_interpretacao_tft.py")
