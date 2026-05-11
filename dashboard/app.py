@@ -212,3 +212,29 @@ try:
     st.info(interpretacao)
 except:
     st.warning("Interpretação não disponível. Rode: python gerar_interpretacao_tft.py")
+
+
+# Consulta RAG
+st.header("Consulta à Literatura Científica")
+st.caption("Busca em artigos indexados com resposta gerada pelo divea-biostats")
+
+from consultar_rag import consultar, PERGUNTAS_FREQUENTES
+
+pergunta_selecionada = st.selectbox(
+    "Perguntas frequentes:",
+    ["— Selecione ou digite abaixo —"] + PERGUNTAS_FREQUENTES
+)
+
+pergunta_livre = st.text_input("Ou digite sua própria pergunta:")
+
+pergunta_final = pergunta_livre if pergunta_livre else (
+    pergunta_selecionada if pergunta_selecionada != "— Selecione ou digite abaixo —" else None
+)
+
+if pergunta_final:
+    with st.spinner("Consultando..."):
+        resposta, fontes, do_cache = consultar(pergunta_final)
+    if do_cache:
+        st.caption("⚡ Resposta em cache")
+    st.write(resposta)
+    st.caption(f"Fontes: {', '.join(set(fontes))}")
