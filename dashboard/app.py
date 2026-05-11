@@ -42,8 +42,8 @@ def carregar_series():
 
 @st.cache_data
 def carregar_shapefile():
-    gdf = gpd.read_file('/home/valentim/divea/data/gis/Pr_Municipios_2024/PR_Municipios_2024.shp')
-    gdf['CD_MUN6'] = gdf['CD_MUN'].str[:6]
+    gdf = gpd.read_file('/home/valentim/divea/data/processed/PR_municipios.gpkg')
+    gdf['CD_MUN6'] = gdf['code_muni'].astype(int).astype(str).str[:6]
     return gdf
 
 @st.cache_resource
@@ -135,7 +135,7 @@ ax.axis('off')
 st.pyplot(fig)
 plt.close()
 
-hh = gdf_ano[gdf_ano['cluster'] == 'HH - Alto-Alto'][['NM_MUN', 'casos']].sort_values('casos', ascending=False)
+hh = gdf_ano[gdf_ano['cluster'] == 'HH - Alto-Alto'][['name_muni', 'casos']].sort_values('casos', ascending=False)
 if len(hh) > 0:
     st.subheader(f"Municípios em alerta (HH): {len(hh)}")
     st.dataframe(hh.reset_index(drop=True))
@@ -165,3 +165,27 @@ with col3:
     for i, v in enumerate(pred_vsr):
         st.metric(f"Semana +{i+1}", f"{max(0, int(v)):,}")
         
+# Previsao TFT
+st.header("Previsao TFT — Proximas 4 Semanas")
+st.caption("Modelo Temporal Fusion Transformer com intervalos de confianca (P10-P90)")
+
+try:
+    df_prev = pd.read_parquet('/home/valentim/divea/data/processed/previsoes_tft.parquet')
+
+    col1, col2, col3 = st.columns(3)
+
+    for col, modelo, titulo in zip(
+        [col1, col2, col3],
+        ['srag', 'influenza', 'vsr'],
+        ['SRAG Total', 'Influenza', 'VSR']
+    ):
+        df_m = df_prev[df_prev['modelo'] == modelo]
+        col.subheader(titulo)
+        for _, row in df_m.iterrows():
+            col.metric(
+                f"Semana {row['data'].strftime('%d/%m')}",
+                f"{max(0, row['p50']):.0f} casos",
+                f"IC90: {max(0, row['p10']):.0f}–{row['p90']:.0f}"
+            )
+except Exception as e:
+    st.warning(f"Previsoes nao disponiveis: {e}")
