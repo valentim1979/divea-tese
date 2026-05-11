@@ -32,8 +32,9 @@ def carregar_municipios():
 
 @st.cache_data
 def carregar_shapefile():
-    gdf = gpd.read_file('/home/valentim/divea/data/gis/Pr_Municipios_2024/PR_Municipios_2024.shp')
-    gdf['CD_MUN6'] = gdf['CD_MUN'].str[:6]
+    gdf = gpd.read_file('/home/valentim/divea/data/processed/PR_municipios.gpkg')
+    gdf['CD_MUN6'] = gdf['code_muni'].astype(int).astype(str).str[:6]
+    
     return gdf
 
 df = carregar_dados()
@@ -132,3 +133,27 @@ col2.metric("SARS-CoV-2 detectado", f"{cov_count:,}")
 vsr_count = int((df_ano['PCR_VSR'] == '1').sum())
 col3.metric("VSR detectado", f"{vsr_count:,}")
 vsr_count = int((df_ano['PCR_VSR'] == '1').sum())
+
+# Previsão TFT
+st.header("Previsão TFT — Próximas 4 Semanas")
+
+try:
+    df_prev = pd.read_parquet('/home/valentim/divea/data/processed/previsoes_tft.parquet')
+
+    col1, col2, col3 = st.columns(3)
+
+    for col, modelo, titulo in zip(
+        [col1, col2, col3],
+        ['srag', 'influenza', 'vsr'],
+        ['SRAG Total', 'Influenza', 'VSR']
+    ):
+        df_m = df_prev[df_prev['modelo'] == modelo]
+        col.subheader(titulo)
+        for _, row in df_m.iterrows():
+            col.metric(
+                f"Semana {row['data'].strftime('%d/%m')}",
+                f"{row['p50']:.0f} casos",
+                f"IC90: {row['p10']:.0f}–{row['p90']:.0f}"
+            )
+except Exception as e:
+    st.warning(f"Previsões não disponíveis: {e}")
