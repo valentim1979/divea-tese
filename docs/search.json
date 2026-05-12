@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "gal/index.html",
+    "href": "gal/index.html",
+    "title": "Laboratório — GAL",
+    "section": "",
+    "text": "Em construção."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DIVEA",
+    "section": "",
+    "text": "&gt; *Resumo automático indisponível.*\n&gt; *Execute `ollama/gerar_resumo.R` antes do render.*"
+  },
+  {
+    "objectID": "index.html#situação-epidemiológica-atual",
+    "href": "index.html#situação-epidemiológica-atual",
+    "title": "DIVEA",
+    "section": "",
+    "text": "&gt; *Resumo automático indisponível.*\n&gt; *Execute `ollama/gerar_resumo.R` antes do render.*"
+  },
+  {
+    "objectID": "index.html#módulos-do-divea",
+    "href": "index.html#módulos-do-divea",
+    "title": "DIVEA",
+    "section": "Módulos do DIVEA",
+    "text": "Módulos do DIVEA\n\n\n&lt;div class=\"card-titulo\"&gt;SRAG — Vigilância Universal&lt;/div&gt;\n&lt;div class=\"card-valor\"&gt;NA&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;casos notificados em —&lt;/div&gt;\n&lt;div class=\"card-variacao\" style=\"color:gray\"&gt; vs. semana anterior&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;Óbitos: NA &nbsp;|&nbsp; Vírus pred.: —&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;SE — &nbsp;|&nbsp; Atualizado: —&lt;/div&gt;\n&lt;div class=\"card-link\"&gt;→ &lt;a href=\"https://valentim1979.github.io/vigilancia-epidemiologica/\" target=\"_blank\"&gt;Dashboard SRAG completo ↗&lt;/a&gt;&lt;/div&gt;\n\n\n&lt;div class=\"card-titulo\"&gt;Laboratório — GAL / LACEN-PR&lt;/div&gt;\n&lt;div class=\"card-valor\"&gt;— dias&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;TAT mediano — coleta até resultado&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;NA amostras nas últimas 4 semanas | 15ª RS&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;Positividade viral, TAT por município, benchmarking PR&lt;/div&gt;\n&lt;div class=\"card-link\"&gt;→ &lt;a href=\"gal/index.html\"&gt;Análise laboratorial completa&lt;/a&gt;&lt;/div&gt;\n\n\n&lt;div class=\"card-titulo\"&gt;Vigilância Sindrômica &lt;span class=\"card-tag-dev\"&gt;Em desenvolvimento&lt;/span&gt;&lt;/div&gt;\n&lt;div class=\"card-valor\" style=\"font-size:1.1rem;color:#6c757d;\"&gt;GAL + SIVEP-Gripe&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;Positividade viral semanal e co-circulação&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;Detecção de anomalias e vínculo GAL × SINAN&lt;/div&gt;\n&lt;div class=\"card-link\"&gt;→ &lt;a href=\"sindromica/index.html\"&gt;Ver módulo&lt;/a&gt;&lt;/div&gt;\n\n\n&lt;div class=\"card-titulo\"&gt;Modelos Preditivos &lt;span class=\"card-tag-dev\"&gt;Acesso interno&lt;/span&gt;&lt;/div&gt;\n&lt;div class=\"card-valor\" style=\"font-size:1.1rem;color:#003366;\"&gt;LSTM + TFT&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;Previsão 4 semanas: SRAG, Influenza, VSR&lt;/div&gt;\n&lt;div class=\"card-detalhe\"&gt;IC90 | Interpretação via Qwen 2.5 14B&lt;/div&gt;\n&lt;div class=\"card-link\"&gt;→ &lt;a href=\"http://localhost:8501\" target=\"_blank\"&gt;Painel Streamlit (rede interna)&lt;/a&gt;&lt;/div&gt;\n\n\n\n15ª Regional de Saúde — Seção de Vigilância Epidemiológica — Maringá/PR"
+  },
+  {
+    "objectID": "sindromica/index.html",
+    "href": "sindromica/index.html",
+    "title": "Vigilância Sindrômica",
+    "section": "",
+    "text": "Em desenvolvimento."
+  }
+]

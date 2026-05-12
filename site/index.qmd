@@ -1,0 +1,204 @@
+---
+title: "DIVEA"
+subtitle: "Dashboard Interativo de Vigilância Epidemiológica Aumentada — 15ª RS Maringá"
+date: today
+toc: false
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(jsonlite)
+library(readxl)
+library(janitor)
+
+# Caminhos — ajuste se necessário
+METRICAS_SRAG <- "dados/metricas_srag.json"
+GAL_PATH      <- "/home/valentim/divea/data/GAL_VR_consolidado.xlsx"
+
+municipios_15rs <- c(
+  "ANGULO", "ASTORGA", "ATALAIA", "COLORADO", "DOUTOR CAMARGO",
+  "FLORAI", "FLORESTA", "FLORIDA", "IGUARACU", "ITAGUAJE",
+  "ITAMBE", "IVATUBA", "LOBATO", "MANDAGUACU", "MANDAGUARI",
+  "MARIALVA", "MARINGA", "MUNHOZ DE MELO", "NOSSA SENHORA DAS GRACAS",
+  "NOVA ESPERANCA", "OURIZONA", "PAICANDU", "PARANACITY",
+  "PRESIDENTE CASTELO BRANCO", "SANTA FE", "SANTA INES",
+  "SANTO INACIO", "SAO JORGE DO IVAI", "SARANDI", "UNIFLOR"
+)
+
+# Lê métricas SRAG
+if (file.exists(METRICAS_SRAG)) {
+  m <- fromJSON(METRICAS_SRAG)
+} else {
+  m <- list(
+    atualizado_em = "—", semana_atual = "—",
+    total_casos = "—", total_obitos = "—",
+    variacao_pct = NA, virus_pred = "—",
+    ano_referencia = "—",
+    url_dashboard = "https://valentim1979.github.io/vigilancia-epidemiologica/"
+  )
+}
+
+# Lê TAT do GAL (últimas 4 semanas)
+if (file.exists(GAL_PATH)) {
+  gal <- read_excel(GAL_PATH, col_types = "text") |>
+    clean_names() |>
+    mutate(
+      data_da_coleta    = as.Date(as.numeric(data_da_coleta), origin = "1899-12-30"),
+      data_da_liberacao = as.Date(as.numeric(data_da_liberacao), origin = "1899-12-30"),
+      tat_total         = as.numeric(data_da_liberacao - data_da_coleta)
+    ) |>
+    filter(
+      municipio_de_residencia %in% municipios_15rs,
+      !is.na(data_da_coleta),
+      data_da_coleta >= Sys.Date() - 28,
+      !is.na(tat_total), tat_total >= 0, tat_total <= 60
+    )
+  tat_med    <- round(median(gal$tat_total, na.rm = TRUE), 1)
+  n_amostras <- nrow(gal)
+} else {
+  tat_med <- "—"; n_amostras <- "—"
+}
+
+# Seta de variação
+seta <- function(v) {
+  if (is.na(v)) return("")
+  if (v > 0) paste0("▲ +", v, "%")
+  else if (v < 0) paste0("▼ ", v, "%")
+  else "→ estável"
+}
+cor_variacao <- function(v) {
+  if (is.na(v) || v == 0) return("gray")
+  if (v > 0) "#d62728" else "#2ca02c"
+}
+```
+
+```{=html}
+<style>
+.divea-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0 2rem 0;
+}
+.divea-card {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.07);
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.divea-card .card-titulo {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #6c757d;
+}
+.divea-card .card-valor {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #003366;
+  line-height: 1.1;
+}
+.divea-card .card-detalhe { font-size: .85rem; color: #495057; }
+.divea-card .card-variacao { font-size: .9rem; font-weight: 600; }
+.divea-card .card-link {
+  margin-top: auto;
+  padding-top: .6rem;
+  font-size: .82rem;
+}
+.divea-card .card-link a {
+  color: #003366;
+  text-decoration: none;
+  border-bottom: 1px dashed #003366;
+}
+.divea-card .card-link a:hover { border-bottom-style: solid; }
+.card-tag-dev {
+  display: inline-block;
+  background: #fff3cd;
+  color: #856404;
+  border-radius: 4px;
+  font-size: .75rem;
+  padding: 2px 7px;
+  font-weight: 600;
+}
+</style>
+```
+
+## Situação epidemiológica atual
+
+```{r resumo-ollama}
+resumo_path <- "ollama/resumo_atual.txt"
+if (file.exists(resumo_path)) {
+  cat(readLines(resumo_path, warn = FALSE), sep = "\n")
+} else {
+  cat("> *Resumo automático indisponível.*\n> *Execute `ollama/gerar_resumo.R` antes do render.*")
+}
+```
+
+---
+
+## Módulos do DIVEA
+
+```{r cards, results='asis'}
+cat(sprintf('
+<div class="divea-cards">
+
+  <div class="divea-card">
+    <div class="card-titulo">SRAG — Vigilância Universal</div>
+    <div class="card-valor">%s</div>
+    <div class="card-detalhe">casos notificados em %s</div>
+    <div class="card-variacao" style="color:%s">%s vs. semana anterior</div>
+    <div class="card-detalhe">Óbitos: %s &nbsp;|&nbsp; Vírus pred.: %s</div>
+    <div class="card-detalhe">SE %s &nbsp;|&nbsp; Atualizado: %s</div>
+    <div class="card-link">→ <a href="%s" target="_blank">Dashboard SRAG completo ↗</a></div>
+  </div>
+
+  <div class="divea-card">
+    <div class="card-titulo">Laboratório — GAL / LACEN-PR</div>
+    <div class="card-valor">%s dias</div>
+    <div class="card-detalhe">TAT mediano — coleta até resultado</div>
+    <div class="card-detalhe">%s amostras nas últimas 4 semanas | 15ª RS</div>
+    <div class="card-detalhe">Positividade viral, TAT por município, benchmarking PR</div>
+    <div class="card-link">→ <a href="gal/index.html">Análise laboratorial completa</a></div>
+  </div>
+
+  <div class="divea-card">
+    <div class="card-titulo">Vigilância Sindrômica <span class="card-tag-dev">Em desenvolvimento</span></div>
+    <div class="card-valor" style="font-size:1.1rem;color:#6c757d;">GAL + SIVEP-Gripe</div>
+    <div class="card-detalhe">Positividade viral semanal e co-circulação</div>
+    <div class="card-detalhe">Detecção de anomalias e vínculo GAL × SINAN</div>
+    <div class="card-link">→ <a href="sindromica/index.html">Ver módulo</a></div>
+  </div>
+
+  <div class="divea-card">
+    <div class="card-titulo">Modelos Preditivos <span class="card-tag-dev">Acesso interno</span></div>
+    <div class="card-valor" style="font-size:1.1rem;color:#003366;">LSTM + TFT</div>
+    <div class="card-detalhe">Previsão 4 semanas: SRAG, Influenza, VSR</div>
+    <div class="card-detalhe">IC90 | Interpretação via Qwen 2.5 14B</div>
+    <div class="card-link">→ <a href="http://localhost:8501" target="_blank">Painel Streamlit (rede interna)</a></div>
+  </div>
+
+</div>
+',
+  format(as.integer(m$total_casos), big.mark = "."),
+  m$ano_referencia,
+  cor_variacao(m$variacao_pct),
+  seta(m$variacao_pct),
+  format(as.integer(m$total_obitos), big.mark = "."),
+  m$virus_pred,
+  m$semana_atual,
+  m$atualizado_em,
+  m$url_dashboard,
+  tat_med,
+  format(as.integer(n_amostras), big.mark = ".")
+))
+```
+
+---
+
+*15ª Regional de Saúde — Seção de Vigilância Epidemiológica — Maringá/PR*

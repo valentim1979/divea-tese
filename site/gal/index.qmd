@@ -1,0 +1,7 @@
+---
+title: "Laboratório — GAL"
+subtitle: "Vigilância Laboratorial de Vírus Respiratórios | LACEN-PR"
+date: today
+---
+
+Em construção.

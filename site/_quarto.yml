@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: ../docs
+
+website:
+  title: "DIVEA"
+  description: "Dashboard Interativo de Vigilância Epidemiológica Aumentada — 15ª RS Maringá"
+  repo-url: https://github.com/valentim1979/divea-tese
+  repo-actions: [issue]
+
+  navbar:
+    background: "#003366"
+    foreground: "white"
+    left:
+      - href: index.qmd
+        text: "Início"
+      - href: gal/index.qmd
+        text: "Laboratório (GAL)"
+      - href: sindromica/index.qmd
+        text: "Sindrômica"
+    right:
+      - icon: github
+        href: https://github.com/valentim1979/divea-tese
+
+  page-footer:
+    left: "SCVGE — 15ª Regional de Saúde de Maringá | DIVEA"
+    right: "Desenvolvido com [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    lang: pt-BR
+    toc: true
+    toc-depth: 2
+    toc-title: "Nesta página"
+    date-format: "DD/MM/YYYY"
+    code-fold: true
+    code-summary: "Ver código"
+    fig-width: 10
+    fig-height: 6
+    fig-dpi: 150
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: auto
