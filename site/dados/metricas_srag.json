@@ -1,0 +1,16 @@
+{
+  "atualizado_em": "12/05/2026",
+  "ano_referencia": 2026,
+  "semana_atual": 16,
+  "casos_sem_atual": 12,
+  "casos_sem_ant": 55,
+  "variacao_pct": -78.2,
+  "total_casos": 411,
+  "total_obitos": 24,
+  "total_uti": 138,
+  "municipio_topo": "UNIFLOR",
+  "incid_topo": 142.5,
+  "virus_pred": "Rinovírus",
+  "n_virus_pred": 51,
+  "url_dashboard": "https://valentim1979.github.io/vigilancia-epidemiologica/"
+}
