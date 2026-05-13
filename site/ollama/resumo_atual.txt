@@ -1,0 +1,5 @@
+> **Resumo epidemiológico — SE19/2026**
+>
+> Na semana epidemiológica SE19/2026, a 15ª Regional de Saúde de Maringá registrou uma média semanal de 31 casos de SRAG nas últimas quatro semanas, com um total acumulado de 411 casos e 24 óbitos em 2026. Os modelos preditivos indicam que a tendência é de aumento, prevendo cerca de 653 casos na próxima semana (IC90: 484–744) e aproximadamente 805 casos quatro semanas adiante. O rinovírus é o agente viral predominante, mas há circulação de influenza e VSR, que podem contribuir para um aumento nos casos de SRAG nos próximos meses. É recomendado intensificar ações preventivas, como vacinação e promoção da higiene, além de preparar os recursos hospitalares para enfrentar essa tendência crescente.
+>
+> *Gerado em: 12/05/2026 | Modelo: divea-biostats | Amostras GAL (4 sem.): 92*
