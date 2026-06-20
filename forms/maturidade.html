@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico de Maturidade Digital — 15ª RS/SESA-PR</title>
+  <meta name="description" content="Formulário de diagnóstico da maturidade digital dos serviços de saúde da 15ª Regional de Saúde de Maringá.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #1D9E75;
+      --green-dark: #0F6E56;
+      --green-light: #E1F5EE;
+      --blue: #154360;
+      --text: #1a1a1a;
+      --text-muted: #555;
+      --text-hint: #888;
+      --border: #ddd;
+      --bg: #f8f9fa;
+      --white: #ffffff;
+      --red: #C0392B;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: var(--green-dark);
+      color: white;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .site-header strong { font-size: 14px; }
+    .site-header span { opacity: 0.7; }
+
+    /* PROGRESS */
+    .progress-wrap {
+      background: var(--green-dark);
+      padding: 0 24px 16px;
+    }
+    .progress-track {
+      height: 4px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+    }
+    .progress-fill {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 6px;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+
+    /* SECTION CARD */
+    .section-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 28px 28px 24px;
+      margin-top: 24px;
+      display: none;
+    }
+    .section-card.active { display: block; }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+    .section-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* FIELDS */
+    .field { margin-bottom: 20px; }
+    .field:last-of-type { margin-bottom: 0; }
+
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .field-label .req { color: var(--red); margin-left: 2px; }
+    .field-hint {
+      font-size: 12px;
+      color: var(--text-hint);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.12);
+    }
+    textarea { min-height: 90px; resize: vertical; }
+
+    /* RADIO / CHECKBOX OPTIONS */
+    .options { display: flex; flex-direction: column; gap: 7px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+      user-select: none;
+    }
+    .option:hover { background: var(--green-light); border-color: #a8d9c9; }
+    .option input { margin-top: 2px; flex-shrink: 0; accent-color: var(--green); }
+    .option span { font-size: 14px; color: var(--text); line-height: 1.5; }
+    .option.selected { background: var(--green-light); border-color: var(--green); }
+
+    /* SCALE */
+    .scale-wrap { margin-top: 4px; }
+    .scale-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .scale-btns label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .scale-btns input[type="radio"] { display: none; }
+    .scale-num {
+      width: 100%;
+      padding: 8px 4px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--white);
+      transition: all 0.12s;
+    }
+    .scale-btns input[type="radio"]:checked + .scale-num {
+      background: var(--green-light);
+      border-color: var(--green);
+      color: var(--green-dark);
+    }
+    .scale-anchors {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-hint);
+      margin-top: 6px;
+    }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid #f0f0f0; margin: 20px 0; }
+
+    /* NAV BUTTONS */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+    .btn-primary {
+      flex: 1;
+      padding: 12px 20px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+    .btn-secondary {
+      padding: 12px 20px;
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: var(--bg); }
+
+    /* RESULT */
+    .result-score {
+      text-align: center;
+      padding: 28px 20px;
+      background: var(--green-light);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+    }
+    .result-score .num {
+      font-size: 56px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+    .result-score .denom { font-size: 18px; color: var(--text-muted); margin-bottom: 10px; }
+    .nivel-pill {
+      display: inline-block;
+      padding: 5px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .dim-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+    .dim-row:last-child { border-bottom: none; }
+    .dim-bar-wrap { flex: 1; margin: 0 12px; }
+    .dim-bar {
+      height: 6px;
+      background: #eee;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .dim-bar-fill {
+      height: 6px;
+      background: var(--green);
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+    .dim-score { font-size: 12px; font-weight: 600; color: var(--green-dark); min-width: 36px; text-align: right; }
+
+    /* LOADING STATE */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border: 3px solid #ddd;
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ERROR */
+    .error-msg {
+      background: #fdf2f2;
+      border: 1px solid #f5c6c6;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* SHARE */
+    .share-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-top: 16px;
+    }
+    .share-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+    .copy-url {
+      display: flex; gap: 8px;
+    }
+    .copy-url input {
+      flex: 1; font-size: 12px; padding: 7px 10px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: white; color: var(--text);
+    }
+    .copy-url button {
+      padding: 7px 14px; font-size: 12px; font-weight: 600;
+      background: var(--green); color: white; border: none;
+      border-radius: var(--radius); cursor: pointer;
+    }
+
+    @media (max-width: 500px) {
+      .section-card { padding: 20px 16px; }
+      .scale-btns { gap: 4px; }
+      .scale-num { font-size: 13px; padding: 7px 2px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <strong>DIVEA · 15ª RS/SESA-PR</strong>
+    <span> — Diagnóstico de Maturidade Digital em Saúde</span>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="prog"></div>
+  </div>
+  <div class="progress-label" id="prog-label">Seção 1 de 7</div>
+</div>
+
+<div class="container">
+
+  <!-- SEÇÃO 1: IDENTIFICAÇÃO -->
+  <div class="section-card active" id="s0">
+    <div class="section-eyebrow">Seção 1 de 7</div>
+    <div class="section-title">Identificação do estabelecimento</div>
+    <div class="section-desc">Dados básicos do serviço avaliado. As respostas são confidenciais e usadas apenas para fins de diagnóstico regional da 15ª RS.</div>
+
+    <div class="field">
+      <label class="field-label">Nome do estabelecimento <span class="req">*</span></label>
+      <input type="text" id="nome_estab" placeholder="Ex.: UBS Central, Hospital Municipal de...">
+    </div>
+    <div class="field">
+      <label class="field-label">Município <span class="req">*</span></label>
+      <select id="municipio">
+        <option value="">Selecione...</option>
+        <option>Ângulo</option>
+        <option>Astorga</option>
+        <option>Atalaia</option>
+        <option>Colorado</option>
+        <option>Doutor Camargo</option>
+        <option>Floraí</option>
+        <option>Floresta</option>
+        <option>Flórida</option>
+        <option>Iguaraçu</option>
+        <option>Itaguajé</option>
+        <option>Itambé</option>
+        <option>Ivatuba</option>
+        <option>Lobato</option>
+        <option>Mandaguaçu</option>
+        <option>Mandaguari</option>
+        <option>Marialva</option>
+        <option>Maringá</option>
+        <option>Munhoz de Melo</option>
+        <option>Nossa Senhora das Graças</option>
+        <option>Nova Esperança</option>
+        <option>Ourizona</option>
+        <option>Paiçandu</option>
+        <option>Paranacity</option>
+        <option>Presidente Castelo Branco</option>
+        <option>Santa Fé</option>
+        <option>Santa Inês</option>
+        <option>Santo Inácio</option>
+        <option>São Jorge do Ivaí</option>
+        <option>Sarandi</option>
+        <option>Uniflor</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Tipo de estabelecimento <span class="req">*</span></label>
+      <div class="options" id="tipo-opts">
+        <label class="option"><input type="radio" name="tipo" value="UBS / Atenção Primária"><span>UBS / Atenção Primária</span></label>
+        <label class="option"><input type="radio" name="tipo" value="Policlínica / Ambulatório especializado"><span>Policlínica / Ambulatório especializado</span></label>
+        <label class="option"><input type="radio" name="tipo" value="Hospital de pequeno porte (até 50 leitos)"><span>Hospital de pequeno porte (até 50 leitos)</span></label>
+        <label class="option"><input type="radio" name="tipo" value="Hospital de médio/grande porte"><span>Hospital de médio/grande porte</span></label>
+        <label class="option"><input type="radio" name="tipo" value="UPA / Pronto-Socorro"><span>UPA / Pronto-Socorro</span></label>
+        <label class="option"><input type="radio" name="tipo" value="Outro"><span>Outro</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label">Cargo/função do respondente <span class="req">*</span></label>
+      <input type="text" id="cargo" placeholder="Ex.: Gerente de TI, Diretor, Coordenador...">
+    </div>
+    <div class="field">
+      <label class="field-label">E-mail para contato</label>
+      <span class="field-hint">Opcional. Usado apenas para devolutiva do diagnóstico.</span>
+      <input type="email" id="email" placeholder="nome@dominio.gov.br">
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="next(0)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 2: INFRAESTRUTURA -->
+  <div class="section-card" id="s1">
+    <div class="section-eyebrow">Seção 2 de 7</div>
+    <div class="section-title">Infraestrutura tecnológica</div>
+    <div class="section-desc">Avalia a base estrutural de conectividade, equipamentos e sistemas disponíveis no estabelecimento.</div>
+
+    <div class="field">
+      <label class="field-label">1. O estabelecimento possui acesso à internet? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_internet" value="Não possui acesso"><span>Não possui acesso</span></label>
+        <label class="option"><input type="radio" name="q_internet" value="Acesso parcial (alguns pontos ou instável)"><span>Acesso parcial (alguns pontos ou instável)</span></label>
+        <label class="option"><input type="radio" name="q_internet" value="Acesso amplo e estável em todo o estabelecimento"><span>Acesso amplo e estável em todo o estabelecimento</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">2. Qual o nível de informatização dos processos assistenciais? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_informatizacao" value="Predominantemente em papel"><span>Predominantemente em papel</span></label>
+        <label class="option"><input type="radio" name="q_informatizacao" value="Misto (papel + sistemas parciais)"><span>Misto (papel + sistemas parciais)</span></label>
+        <label class="option"><input type="radio" name="q_informatizacao" value="Predominantemente digital, com prontuário eletrônico"><span>Predominantemente digital, com prontuário eletrônico</span></label>
+        <label class="option"><input type="radio" name="q_informatizacao" value="Totalmente digital, integrado à RNDS"><span>Totalmente digital, integrado à RNDS</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">3. Equipamentos disponíveis <span class="req">*</span></label>
+      <span class="field-hint">Selecione todos que se aplicam</span>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="q_equipamentos" value="Computadores em quantidade suficiente"><span>Computadores em quantidade suficiente para a demanda</span></label>
+        <label class="option"><input type="checkbox" name="q_equipamentos" value="Tablets ou dispositivos móveis"><span>Tablets ou dispositivos móveis para assistência</span></label>
+        <label class="option"><input type="checkbox" name="q_equipamentos" value="Impressoras funcionais"><span>Impressoras funcionais</span></label>
+        <label class="option"><input type="checkbox" name="q_equipamentos" value="Servidor local ou nuvem"><span>Servidor local ou armazenamento em nuvem</span></label>
+        <label class="option"><input type="checkbox" name="q_equipamentos" value="Nenhum em quantidade adequada"><span>Nenhum dos anteriores em quantidade adequada</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">4. Existe suporte técnico de TI disponível? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_suporte" value="Não há suporte disponível"><span>Não há suporte disponível</span></label>
+        <label class="option"><input type="radio" name="q_suporte" value="Suporte esporádico via prefeitura"><span>Suporte esporádico ou por demanda via prefeitura</span></label>
+        <label class="option"><input type="radio" name="q_suporte" value="Suporte regular com profissional próprio ou contrato"><span>Suporte regular com profissional próprio ou contrato</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(1)">← Voltar</button>
+      <button class="btn-primary" onclick="next(1)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 3: SISTEMAS -->
+  <div class="section-card" id="s2">
+    <div class="section-eyebrow">Seção 3 de 7</div>
+    <div class="section-title">Sistemas de informação em saúde</div>
+    <div class="section-desc">Avalia o uso e a qualidade do registro nos sistemas nacionais e locais.</div>
+
+    <div class="field">
+      <label class="field-label">5. Quais sistemas o estabelecimento alimenta regularmente? <span class="req">*</span></label>
+      <span class="field-hint">Selecione todos que se aplicam</span>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SINAN"><span>SINAN (agravos de notificação)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SIM"><span>SIM (declaração de óbito)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SINASC"><span>SINASC (nascidos vivos)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SISAB / e-SUS APS"><span>SISAB / e-SUS APS</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="PEP hospitalar (Tasy ou similar)"><span>PEP hospitalar (Tasy ou similar)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SIVEP-Gripe / e-SUS Notifica"><span>SIVEP-Gripe / e-SUS Notifica</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="RNDS"><span>RNDS (Rede Nacional de Dados em Saúde)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="SISREG / RegulaSUS"><span>SISREG / RegulaSUS (regulação de vagas)</span></label>
+        <label class="option"><input type="checkbox" name="q_sistemas" value="Nenhum de forma sistemática"><span>Nenhum de forma sistemática</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">6. Com que frequência ocorrem atrasos ou inconsistências no envio de dados? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_atrasos" value="Frequentemente (falhas recorrentes)"><span>Frequentemente (falhas recorrentes)</span></label>
+        <label class="option"><input type="radio" name="q_atrasos" value="Às vezes (eventuais atrasos)"><span>Às vezes (eventuais atrasos)</span></label>
+        <label class="option"><input type="radio" name="q_atrasos" value="Raramente (envios em dia)"><span>Raramente (envios em dia)</span></label>
+        <label class="option"><input type="radio" name="q_atrasos" value="Nunca (fluxo sistemático e consistente)"><span>Nunca (fluxo sistemático e consistente)</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">7. Os profissionais receberam capacitação nos sistemas? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_capacitacao" value="Não receberam capacitação formal"><span>Não receberam capacitação formal</span></label>
+        <label class="option"><input type="radio" name="q_capacitacao" value="Capacitação inicial, sem reciclagem periódica"><span>Capacitação inicial, sem reciclagem periódica</span></label>
+        <label class="option"><input type="radio" name="q_capacitacao" value="Capacitações periódicas realizadas"><span>Capacitações periódicas realizadas</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(2)">← Voltar</button>
+      <button class="btn-primary" onclick="next(2)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 4: TELESSAÚDE -->
+  <div class="section-card" id="s3">
+    <div class="section-eyebrow">Seção 4 de 7</div>
+    <div class="section-title">Telessaúde e acesso remoto</div>
+    <div class="section-desc">Avalia o uso de ferramentas de teleconsulta, telediagnóstico e educação permanente à distância.</div>
+
+    <div class="field">
+      <label class="field-label">8. O estabelecimento utiliza alguma modalidade de Telessaúde? <span class="req">*</span></label>
+      <span class="field-hint">Selecione todos que se aplicam</span>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Teleconsulta"><span>Teleconsulta (consulta médica/especialista remota)</span></label>
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Telemonitoramento"><span>Telemonitoramento de pacientes crônicos</span></label>
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Teleducação / educação permanente remota"><span>Teleducação / educação permanente remota</span></label>
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Telerregulação"><span>Telerregulação (regulação de vagas via sistema)</span></label>
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Telediagnóstico"><span>Telediagnóstico (ECG, imagens, etc.)</span></label>
+        <label class="option"><input type="checkbox" name="q_telessaude" value="Não utiliza nenhuma modalidade"><span>Não utiliza nenhuma modalidade</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">9. Qual o principal obstáculo para o uso da Telessaúde? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Falta de infraestrutura (internet, equipamentos)"><span>Falta de infraestrutura (internet, equipamentos)</span></label>
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Falta de capacitação dos profissionais"><span>Falta de capacitação dos profissionais</span></label>
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Fluxos não definidos / sem protocolo institucional"><span>Fluxos não definidos / sem protocolo institucional</span></label>
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Resistência cultural / baixa adesão da equipe"><span>Resistência cultural / baixa adesão da equipe</span></label>
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Não há obstáculo relevante"><span>Não há obstáculo relevante</span></label>
+        <label class="option"><input type="radio" name="q_obstaculo_tele" value="Não se aplica ao tipo de serviço"><span>Não se aplica ao tipo de serviço</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">10. A Telessaúde já reduziu encaminhamentos desnecessários? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_impacto_encaminhamentos" value="Não é possível avaliar / não usa Telessaúde"><span>Não é possível avaliar / não usa Telessaúde</span></label>
+        <label class="option"><input type="radio" name="q_impacto_encaminhamentos" value="Pouco ou nenhum impacto percebido"><span>Pouco ou nenhum impacto percebido</span></label>
+        <label class="option"><input type="radio" name="q_impacto_encaminhamentos" value="Impacto moderado percebido pela equipe"><span>Impacto moderado percebido pela equipe</span></label>
+        <label class="option"><input type="radio" name="q_impacto_encaminhamentos" value="Impacto significativo com redução mensurável"><span>Impacto significativo com redução mensurável de encaminhamentos</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(3)">← Voltar</button>
+      <button class="btn-primary" onclick="next(3)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 5: GESTÃO -->
+  <div class="section-card" id="s4">
+    <div class="section-eyebrow">Seção 5 de 7</div>
+    <div class="section-title">Gestão da informação e jornada do usuário</div>
+    <div class="section-desc">Avalia o uso de dados para gestão e o acompanhamento digital do percurso do paciente na rede.</div>
+
+    <div class="field">
+      <label class="field-label">11. O serviço utiliza dados para tomada de decisão gerencial? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_uso_dados" value="Não utiliza dados de forma sistemática"><span>Não utiliza dados de forma sistemática</span></label>
+        <label class="option"><input type="radio" name="q_uso_dados" value="Utiliza dados esporadicamente, sem rotina definida"><span>Utiliza dados esporadicamente, sem rotina definida</span></label>
+        <label class="option"><input type="radio" name="q_uso_dados" value="Dados analisados periodicamente em reuniões de gestão"><span>Dados analisados periodicamente em reuniões de gestão</span></label>
+        <label class="option"><input type="radio" name="q_uso_dados" value="Painel/dashboard com indicadores monitorados em tempo real"><span>Possui painel/dashboard com indicadores monitorados em tempo real</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">12. O paciente tem acesso digital ao seu histórico? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_acesso_paciente" value="Não há acesso digital para o paciente"><span>Não há acesso digital para o paciente</span></label>
+        <label class="option"><input type="radio" name="q_acesso_paciente" value="Acesso parcial (alguns documentos digitalizados)"><span>Acesso parcial (alguns documentos digitalizados)</span></label>
+        <label class="option"><input type="radio" name="q_acesso_paciente" value="Acesso via Conecte SUS ou app municipal"><span>Acesso via Conecte SUS ou app municipal</span></label>
+        <label class="option"><input type="radio" name="q_acesso_paciente" value="Acesso completo integrado à RNDS"><span>Acesso completo integrado à RNDS</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">13. Existe comunicação digital com o paciente? <span class="req">*</span></label>
+      <span class="field-hint">Agendamento, lembretes, resultados. Selecione todos que se aplicam</span>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="q_comunicacao" value="SMS ou WhatsApp para lembretes"><span>Envio de SMS ou WhatsApp para lembretes de consulta</span></label>
+        <label class="option"><input type="checkbox" name="q_comunicacao" value="Aplicativo próprio ou municipal"><span>Aplicativo próprio ou municipal</span></label>
+        <label class="option"><input type="checkbox" name="q_comunicacao" value="Portal de agendamento online"><span>Portal de agendamento online</span></label>
+        <label class="option"><input type="checkbox" name="q_comunicacao" value="Entrega digital de resultados de exames"><span>Entrega digital de resultados de exames</span></label>
+        <label class="option"><input type="checkbox" name="q_comunicacao" value="Nenhuma comunicação digital"><span>Nenhuma comunicação digital com o paciente</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">14. O Programa Agora Tem Especialistas / SUS Digital é utilizado no município? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_agora_especialistas" value="Não conheço o programa"><span>Não conheço o programa</span></label>
+        <label class="option"><input type="radio" name="q_agora_especialistas" value="Conheço, mas o município não aderiu"><span>Conheço, mas o município não aderiu / não usa</span></label>
+        <label class="option"><input type="radio" name="q_agora_especialistas" value="Em processo de implantação"><span>Em processo de implantação</span></label>
+        <label class="option"><input type="radio" name="q_agora_especialistas" value="Em uso efetivo no município"><span>Em uso efetivo no município</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(4)">← Voltar</button>
+      <button class="btn-primary" onclick="next(4)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 6: ORGANIZACIONAL -->
+  <div class="section-card" id="s5">
+    <div class="section-eyebrow">Seção 6 de 7</div>
+    <div class="section-title">Dimensão humana e organizacional</div>
+    <div class="section-desc">Avalia capacidade técnica da equipe, governança e cultura institucional para a transformação digital.</div>
+
+    <div class="field">
+      <label class="field-label">15. Cultura organizacional em relação à adoção de tecnologias digitais <span class="req">*</span></label>
+      <div class="scale-wrap">
+        <div class="scale-btns">
+          <label><input type="radio" name="q_cultura" value="1"><span class="scale-num">1</span></label>
+          <label><input type="radio" name="q_cultura" value="2"><span class="scale-num">2</span></label>
+          <label><input type="radio" name="q_cultura" value="3"><span class="scale-num">3</span></label>
+          <label><input type="radio" name="q_cultura" value="4"><span class="scale-num">4</span></label>
+          <label><input type="radio" name="q_cultura" value="5"><span class="scale-num">5</span></label>
+        </div>
+        <div class="scale-anchors"><span>Muito resistente</span><span>Muito receptiva</span></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">16. Existe planejamento formal para transformação digital? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_planejamento" value="Não existe planejamento"><span>Não existe planejamento</span></label>
+        <label class="option"><input type="radio" name="q_planejamento" value="Discussões informais, sem documento formal"><span>Discussões informais, sem documento formal</span></label>
+        <label class="option"><input type="radio" name="q_planejamento" value="Plano formal definido, em execução parcial"><span>Plano formal definido, em execução parcial</span></label>
+        <label class="option"><input type="radio" name="q_planejamento" value="Plano formalizado com metas, responsáveis e acompanhamento"><span>Plano formalizado com metas, responsáveis e acompanhamento</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">17. Letramento digital médio dos profissionais de saúde <span class="req">*</span></label>
+      <div class="scale-wrap">
+        <div class="scale-btns">
+          <label><input type="radio" name="q_letramento" value="1"><span class="scale-num">1</span></label>
+          <label><input type="radio" name="q_letramento" value="2"><span class="scale-num">2</span></label>
+          <label><input type="radio" name="q_letramento" value="3"><span class="scale-num">3</span></label>
+          <label><input type="radio" name="q_letramento" value="4"><span class="scale-num">4</span></label>
+          <label><input type="radio" name="q_letramento" value="5"><span class="scale-num">5</span></label>
+        </div>
+        <div class="scale-anchors"><span>Muito baixo</span><span>Muito alto</span></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">18. Existem parcerias institucionais que apoiam a transformação digital? <span class="req">*</span></label>
+      <span class="field-hint">Selecione todos que se aplicam</span>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="q_parcerias" value="Universidade / instituição de ensino"><span>Universidade / instituição de ensino</span></label>
+        <label class="option"><input type="checkbox" name="q_parcerias" value="Consórcios intermunicipais (CISAM/AMUSEP)"><span>Consórcios intermunicipais (CISAM/AMUSEP)</span></label>
+        <label class="option"><input type="checkbox" name="q_parcerias" value="SESA-PR / 15ª RS"><span>SESA-PR / 15ª Regional de Saúde</span></label>
+        <label class="option"><input type="checkbox" name="q_parcerias" value="Setor privado / startups de saúde"><span>Setor privado / startups de saúde</span></label>
+        <label class="option"><input type="checkbox" name="q_parcerias" value="Nenhuma parceria identificada"><span>Nenhuma parceria identificada</span></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(5)">← Voltar</button>
+      <button class="btn-primary" onclick="next(5)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 7: QUALITATIVA -->
+  <div class="section-card" id="s6">
+    <div class="section-eyebrow">Seção 7 de 7</div>
+    <div class="section-title">Potencialidades e contexto local</div>
+    <div class="section-desc">Espaço para registrar percepções qualitativas que complementam os dados estruturados acima.</div>
+
+    <div class="field">
+      <label class="field-label">19. Quais são os maiores desafios para a transformação digital no seu serviço? <span class="req">*</span></label>
+      <textarea id="q_desafios" placeholder="Ex.: falta de internet estável, ausência de profissional de TI, rotatividade de pessoal..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">20. Quais potencialidades ou iniciativas locais podem impulsionar a saúde digital? <span class="req">*</span></label>
+      <textarea id="q_potencialidades" placeholder="Ex.: parceria com UEM, projeto piloto de teleconsulta, digitalização de prontuários..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">21. Avalie o apoio recebido da 15ª Regional de Saúde para transformação digital <span class="req">*</span></label>
+      <div class="scale-wrap">
+        <div class="scale-btns">
+          <label><input type="radio" name="q_apoio_15rs" value="1"><span class="scale-num">1</span></label>
+          <label><input type="radio" name="q_apoio_15rs" value="2"><span class="scale-num">2</span></label>
+          <label><input type="radio" name="q_apoio_15rs" value="3"><span class="scale-num">3</span></label>
+          <label><input type="radio" name="q_apoio_15rs" value="4"><span class="scale-num">4</span></label>
+          <label><input type="radio" name="q_apoio_15rs" value="5"><span class="scale-num">5</span></label>
+        </div>
+        <div class="scale-anchors"><span>Insuficiente</span><span>Muito bom</span></div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label">22. Há alguma necessidade prioritária não contemplada acima?</label>
+      <span class="field-hint">Opcional</span>
+      <textarea id="q_outras" placeholder="Registre aqui qualquer aspecto que considere importante..."></textarea>
+    </div>
+
+    <div class="error-msg" id="error-msg">Preencha os campos obrigatórios antes de enviar.</div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="prev(6)">← Voltar</button>
+      <button class="btn-primary" id="btn-submit" onclick="submeter()">Enviar diagnóstico</button>
+    </div>
+  </div>
+
+  <!-- ENVIANDO -->
+  <div class="section-card" id="s-loading">
+    <div class="loading">
+      <div class="spinner"></div>
+      Enviando respostas...
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="section-card" id="s-result">
+    <div class="section-eyebrow">Diagnóstico concluído</div>
+    <div class="section-title">Índice de Maturidade Digital</div>
+
+    <div class="result-score">
+      <div class="num" id="res-num">—</div>
+      <div class="denom">de 24 pontos possíveis</div>
+      <div><span class="nivel-pill" id="res-nivel">—</span></div>
+    </div>
+
+    <p style="font-size:13px; color:#555; margin-bottom:16px; font-weight:600;">Pontuação por dimensão</p>
+    <div id="dim-bars"></div>
+
+    <div class="share-box" style="margin-top:24px;">
+      <p>Compartilhe este diagnóstico com outros serviços da 15ª RS:</p>
+      <div class="copy-url">
+        <input type="text" id="share-url" readonly>
+        <button onclick="copiarLink()">Copiar link</button>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="reiniciar()">Novo diagnóstico</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// CONFIGURAÇÃO — substitua pela URL do seu Apps Script após o deploy
+// ============================================================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGxkuXh7QoiY4rsK_IDcHy-p4P_SRcdqfM4X5bVyXC3VC2IBdVz83HmZyhmtwZ-2vC/exec";
+// ============================================================
+
+const TOTAL = 7;
+let currentSection = 0;
+
+function updateProgress(n) {
+  const pct = Math.round(((n + 1) / (TOTAL + 1)) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = n < TOTAL
+    ? `Seção ${n + 1} de ${TOTAL}`
+    : 'Concluído';
+}
+
+function showSection(id) {
+  document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function next(n) {
+  currentSection = n + 1;
+  updateProgress(currentSection);
+  showSection('s' + currentSection);
+}
+
+function prev(n) {
+  currentSection = n - 1;
+  updateProgress(currentSection);
+  showSection('s' + currentSection);
+}
+
+function getRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function getCheckboxes(name) {
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e => e.value);
+}
+
+function calcScore() {
+  // Infraestrutura (max 7)
+  const internet = { "Não possui acesso": 0, "Acesso parcial (alguns pontos ou instável)": 1, "Acesso amplo e estável em todo o estabelecimento": 2 };
+  const inform = { "Predominantemente em papel": 0, "Misto (papel + sistemas parciais)": 1, "Predominantemente digital, com prontuário eletrônico": 2, "Totalmente digital, integrado à RNDS": 3 };
+  const suporte = { "Não há suporte disponível": 0, "Suporte esporádico via prefeitura": 1, "Suporte regular com profissional próprio ou contrato": 2 };
+  const s1 = (internet[getRadio('q_internet')] || 0) + (inform[getRadio('q_informatizacao')] || 0) + (suporte[getRadio('q_suporte')] || 0);
+
+  // Sistemas (max 5)
+  const atrasos = { "Frequentemente (falhas recorrentes)": 0, "Às vezes (eventuais atrasos)": 1, "Raramente (envios em dia)": 2, "Nunca (fluxo sistemático e consistente)": 3 };
+  const cap = { "Não receberam capacitação formal": 0, "Capacitação inicial, sem reciclagem periódica": 1, "Capacitações periódicas realizadas": 2 };
+  const s2 = (atrasos[getRadio('q_atrasos')] || 0) + (cap[getRadio('q_capacitacao')] || 0);
+
+  // Telessaúde (max 3)
+  const impacto = { "Não é possível avaliar / não usa Telessaúde": 0, "Pouco ou nenhum impacto percebido": 1, "Impacto moderado percebido pela equipe": 2, "Impacto significativo com redução mensurável": 3 };
+  const s3 = impacto[getRadio('q_impacto_encaminhamentos')] || 0;
+
+  // Gestão (max 5)
+  const uso = { "Não utiliza dados de forma sistemática": 0, "Utiliza dados esporadicamente, sem rotina definida": 1, "Dados analisados periodicamente em reuniões de gestão": 2, "Painel/dashboard com indicadores monitorados em tempo real": 3 };
+  const acesso = { "Não há acesso digital para o paciente": 0, "Acesso parcial (alguns documentos digitalizados)": 1, "Acesso via Conecte SUS ou app municipal": 2, "Acesso completo integrado à RNDS": 2 };
+  const s4 = (uso[getRadio('q_uso_dados')] || 0) + (acesso[getRadio('q_acesso_paciente')] || 0);
+
+  // Organizacional (max 4)
+  const cult = parseInt(getRadio('q_cultura') || 1);
+  const plan = { "Não existe planejamento": 0, "Discussões informais, sem documento formal": 1, "Plano formal definido, em execução parcial": 2, "Plano formalizado com metas, responsáveis e acompanhamento": 3 };
+  const s5 = Math.round((cult - 1) * 0.5) + (plan[getRadio('q_planejamento')] || 0);
+
+  const total = s1 + s2 + s3 + s4 + s5;
+  const max = 24;
+
+  let nivel, cor;
+  if (total <= 6)       { nivel = "Inicial";           cor = "#E24B4A"; }
+  else if (total <= 12) { nivel = "Em desenvolvimento"; cor = "#BA7517"; }
+  else if (total <= 18) { nivel = "Intermediário";      cor = "#1D9E75"; }
+  else                  { nivel = "Avançado";           cor = "#0F6E56"; }
+
+  return { total, max, nivel, cor, dims: [
+    { label: "Infraestrutura",      score: s1, max: 7 },
+    { label: "Sistemas de informação", score: s2, max: 5 },
+    { label: "Telessaúde",          score: s3, max: 3 },
+    { label: "Gestão / jornada",    score: s4, max: 5 },
+    { label: "Humana/organizacional", score: s5, max: 4 },
+  ]};
+}
+
+function coletarDados() {
+  const r = calcScore();
+  return {
+    nome_estab: document.getElementById('nome_estab').value,
+    municipio: document.getElementById('municipio').value,
+    tipo: getRadio('tipo'),
+    cargo: document.getElementById('cargo').value,
+    email: document.getElementById('email').value,
+    q_internet: getRadio('q_internet'),
+    q_informatizacao: getRadio('q_informatizacao'),
+    q_equipamentos: getCheckboxes('q_equipamentos'),
+    q_suporte: getRadio('q_suporte'),
+    q_sistemas: getCheckboxes('q_sistemas'),
+    q_atrasos: getRadio('q_atrasos'),
+    q_capacitacao: getRadio('q_capacitacao'),
+    q_telessaude: getCheckboxes('q_telessaude'),
+    q_obstaculo_tele: getRadio('q_obstaculo_tele'),
+    q_impacto_encaminhamentos: getRadio('q_impacto_encaminhamentos'),
+    q_uso_dados: getRadio('q_uso_dados'),
+    q_acesso_paciente: getRadio('q_acesso_paciente'),
+    q_comunicacao: getCheckboxes('q_comunicacao'),
+    q_agora_especialistas: getRadio('q_agora_especialistas'),
+    q_cultura: getRadio('q_cultura'),
+    q_planejamento: getRadio('q_planejamento'),
+    q_letramento: getRadio('q_letramento'),
+    q_parcerias: getCheckboxes('q_parcerias'),
+    q_desafios: document.getElementById('q_desafios').value,
+    q_potencialidades: document.getElementById('q_potencialidades').value,
+    q_apoio_15rs: getRadio('q_apoio_15rs'),
+    q_outras: document.getElementById('q_outras').value,
+    score_total: r.total,
+    nivel_maturidade: r.nivel
+  };
+}
+
+async function submeter() {
+  const err = document.getElementById('error-msg');
+  const dados = coletarDados();
+
+  if (!dados.q_desafios || !dados.q_potencialidades || !dados.q_apoio_15rs) {
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+
+  showSection('s-loading');
+  updateProgress(7);
+
+  try {
+    if (SCRIPT_URL !== "COLE_AQUI_A_URL_DO_APPS_SCRIPT") {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(dados)
+      });
+    }
+  } catch (e) {
+    // Falha silenciosa — mostra resultado mesmo assim
+    console.warn("Erro ao enviar para o Apps Script:", e);
+  }
+
+  mostrarResultado(dados);
+}
+
+function mostrarResultado(dados) {
+  const r = calcScore();
+
+  document.getElementById('res-num').textContent = r.total;
+  const badge = document.getElementById('res-nivel');
+  badge.textContent = r.nivel;
+  badge.style.background = r.cor + '22';
+  badge.style.color = r.cor;
+
+  const container = document.getElementById('dim-bars');
+  container.innerHTML = r.dims.map(d => `
+    <div class="dim-row">
+      <span style="min-width:160px;font-size:13px;color:#333">${d.label}</span>
+      <div class="dim-bar-wrap">
+        <div class="dim-bar">
+          <div class="dim-bar-fill" style="width:${Math.round((d.score/d.max)*100)}%"></div>
+        </div>
+      </div>
+      <span class="dim-score">${d.score}/${d.max}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('share-url').value = window.location.href;
+  showSection('s-result');
+}
+
+function copiarLink() {
+  const inp = document.getElementById('share-url');
+  inp.select();
+  navigator.clipboard.writeText(inp.value).then(() => {
+    const btn = inp.nextElementSibling;
+    btn.textContent = 'Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar link', 2000);
+  });
+}
+
+function reiniciar() {
+  document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(i => i.checked = false);
+  document.querySelectorAll('input[type="text"], input[type="email"], select, textarea').forEach(i => i.value = '');
+  currentSection = 0;
+  updateProgress(0);
+  showSection('s0');
+}
+
+// Highlight de opções selecionadas
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio') {
+    const group = e.target.closest('.options');
+    if (group) {
+      group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      e.target.closest('.option').classList.add('selected');
+    }
+  }
+  if (e.target.type === 'checkbox') {
+    const opt = e.target.closest('.option');
+    if (opt) opt.classList.toggle('selected', e.target.checked);
+  }
+});
+
+updateProgress(0);
+</script>
+</body>
+</html>
