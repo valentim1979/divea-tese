@@ -667,6 +667,7 @@
     <hr class="divider">
     <div class="field">
       <label class="field-label">17. Letramento digital médio dos profissionais de saúde <span class="req">*</span></label>
+      <span class="field-hint">Entende-se por letramento digital a capacidade da equipe de usar computadores, sistemas e aplicativos no dia a dia do trabalho — preencher prontuário eletrônico, navegar em sistemas de informação, usar e-mail, planilhas, videochamadas, etc.</span>
       <div class="scale-wrap">
         <div class="scale-btns">
           <label><input type="radio" name="q_letramento" value="1"><span class="scale-num">1</span></label>
@@ -711,20 +712,24 @@
       <textarea id="q_potencialidades" placeholder="Ex.: parceria com UEM, projeto piloto de teleconsulta, digitalização de prontuários..."></textarea>
     </div>
     <div class="field">
-      <label class="field-label">21. Avalie o apoio recebido da 15ª Regional de Saúde para transformação digital <span class="req">*</span></label>
-      <div class="scale-wrap">
-        <div class="scale-btns">
-          <label><input type="radio" name="q_apoio_15rs" value="1"><span class="scale-num">1</span></label>
-          <label><input type="radio" name="q_apoio_15rs" value="2"><span class="scale-num">2</span></label>
-          <label><input type="radio" name="q_apoio_15rs" value="3"><span class="scale-num">3</span></label>
-          <label><input type="radio" name="q_apoio_15rs" value="4"><span class="scale-num">4</span></label>
-          <label><input type="radio" name="q_apoio_15rs" value="5"><span class="scale-num">5</span></label>
-        </div>
-        <div class="scale-anchors"><span>Insuficiente</span><span>Muito bom</span></div>
+      <label class="field-label">21. Já houve alguma ação da 15ª Regional de Saúde sobre saúde digital voltada ao seu serviço? <span class="req">*</span></label>
+      <span class="field-hint">Ex.: oficina, capacitação, visita técnica, orientação sobre sistemas, divulgação de programas como SUS Digital ou Agora Tem Especialistas</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_acao_15rs" value="Sim"><span>Sim</span></label>
+        <label class="option"><input type="radio" name="q_acao_15rs" value="Não"><span>Não</span></label>
+        <label class="option"><input type="radio" name="q_acao_15rs" value="Não sei"><span>Não sei</span></label>
       </div>
     </div>
     <div class="field">
-      <label class="field-label">22. Há alguma necessidade prioritária não contemplada acima?</label>
+      <label class="field-label">22. O serviço teria interesse em receber apoio ou capacitação da 15ª RS sobre saúde digital? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_interesse_15rs" value="Sim"><span>Sim</span></label>
+        <label class="option"><input type="radio" name="q_interesse_15rs" value="Não"><span>Não</span></label>
+        <label class="option"><input type="radio" name="q_interesse_15rs" value="Talvez"><span>Talvez</span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label">23. Há alguma necessidade prioritária não contemplada acima?</label>
       <span class="field-hint">Opcional</span>
       <textarea id="q_outras" placeholder="Registre aqui qualquer aspecto que considere importante..."></textarea>
     </div>
@@ -885,7 +890,8 @@ function coletarDados() {
     q_parcerias: getCheckboxes('q_parcerias'),
     q_desafios: document.getElementById('q_desafios').value,
     q_potencialidades: document.getElementById('q_potencialidades').value,
-    q_apoio_15rs: getRadio('q_apoio_15rs'),
+    q_acao_15rs: getRadio('q_acao_15rs'),
+    q_interesse_15rs: getRadio('q_interesse_15rs'),
     q_outras: document.getElementById('q_outras').value,
     score_total: r.total,
     nivel_maturidade: r.nivel
@@ -896,7 +902,7 @@ async function submeter() {
   const err = document.getElementById('error-msg');
   const dados = coletarDados();
 
-  if (!dados.q_desafios || !dados.q_potencialidades || !dados.q_apoio_15rs) {
+  if (!dados.q_desafios || !dados.q_potencialidades || !dados.q_acao_15rs || !dados.q_interesse_15rs) {
     err.style.display = 'block';
     return;
   }
