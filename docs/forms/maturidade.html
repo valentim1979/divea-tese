@@ -745,30 +745,24 @@
     </div>
   </div>
 
-  <!-- RESULTADO -->
+  <!-- CONFIRMAÇÃO -->
   <div class="section-card" id="s-result">
-    <div class="section-eyebrow">Diagnóstico concluído</div>
-    <div class="section-title">Índice de Maturidade Digital</div>
+    <div class="section-eyebrow">Diagnóstico enviado</div>
+    <div class="section-title">Obrigado pela participação!</div>
 
     <div class="result-score">
-      <div class="num" id="res-num">—</div>
-      <div class="denom">de 24 pontos possíveis</div>
-      <div><span class="nivel-pill" id="res-nivel">—</span></div>
+      <div style="font-size:40px; line-height:1;">✓</div>
+      <p style="font-size:14px; color:#444; margin-top:12px; line-height:1.6;">
+        Suas respostas foram registradas com sucesso e serão usadas para o diagnóstico de maturidade digital da 15ª Regional de Saúde de Maringá.
+      </p>
     </div>
 
-    <p style="font-size:13px; color:#555; margin-bottom:16px; font-weight:600;">Pontuação por dimensão</p>
-    <div id="dim-bars"></div>
-
-    <div class="share-box" style="margin-top:24px;">
-      <p>Compartilhe este diagnóstico com outros serviços da 15ª RS:</p>
-      <div class="copy-url">
-        <input type="text" id="share-url" readonly>
-        <button onclick="copiarLink()">Copiar link</button>
-      </div>
-    </div>
+    <p style="font-size:13px; color:#777; text-align:center;">
+      Em caso de dúvidas, entre em contato com a Seção de Vigilância Epidemiológica da 15ª RS.
+    </p>
 
     <div class="btn-row">
-      <button class="btn-secondary" onclick="reiniciar()">Novo diagnóstico</button>
+      <button class="btn-secondary" onclick="reiniciar()">Preencher novo formulário</button>
     </div>
   </div>
 
@@ -927,39 +921,10 @@ async function submeter() {
 }
 
 function mostrarResultado(dados) {
-  const r = calcScore();
-
-  document.getElementById('res-num').textContent = r.total;
-  const badge = document.getElementById('res-nivel');
-  badge.textContent = r.nivel;
-  badge.style.background = r.cor + '22';
-  badge.style.color = r.cor;
-
-  const container = document.getElementById('dim-bars');
-  container.innerHTML = r.dims.map(d => `
-    <div class="dim-row">
-      <span style="min-width:160px;font-size:13px;color:#333">${d.label}</span>
-      <div class="dim-bar-wrap">
-        <div class="dim-bar">
-          <div class="dim-bar-fill" style="width:${Math.round((d.score/d.max)*100)}%"></div>
-        </div>
-      </div>
-      <span class="dim-score">${d.score}/${d.max}</span>
-    </div>
-  `).join('');
-
-  document.getElementById('share-url').value = window.location.href;
+  // O score é calculado em coletarDados() e enviado à planilha,
+  // mas não é exibido ao respondente — fica disponível apenas
+  // na tabela de respostas para análise da 15ª RS.
   showSection('s-result');
-}
-
-function copiarLink() {
-  const inp = document.getElementById('share-url');
-  inp.select();
-  navigator.clipboard.writeText(inp.value).then(() => {
-    const btn = inp.nextElementSibling;
-    btn.textContent = 'Copiado!';
-    setTimeout(() => btn.textContent = 'Copiar link', 2000);
-  });
 }
 
 function reiniciar() {
