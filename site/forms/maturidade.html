@@ -530,6 +530,30 @@
         <label class="option"><input type="radio" name="q_capacitacao" value="Capacitações periódicas realizadas"><span>Capacitações periódicas realizadas</span></label>
       </div>
     </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">8. Com que frequência a equipe recebe capacitação em ferramentas digitais? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_freq_capacitacao" value="Nunca"><span>Nunca</span></label>
+        <label class="option"><input type="radio" name="q_freq_capacitacao" value="Raramente (a cada mais de 2 anos)"><span>Raramente (a cada mais de 2 anos)</span></label>
+        <label class="option"><input type="radio" name="q_freq_capacitacao" value="Anualmente"><span>Anualmente</span></label>
+        <label class="option"><input type="radio" name="q_freq_capacitacao" value="Semestralmente ou mais"><span>Semestralmente ou mais</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">9. Existe um responsável formal pela agenda de saúde digital no estabelecimento? <span class="req">*</span></label>
+      <span class="field-hint">Inclui gestão de problemas como perda de agendamento, horários conflitantes ou falhas nos sistemas</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_responsavel_digital" value="Sim" onclick="document.getElementById('cargo_responsavel_wrap').style.display='block'"><span>Sim, há um profissional designado</span></label>
+        <label class="option"><input type="radio" name="q_responsavel_digital" value="Não há responsável formal" onclick="document.getElementById('cargo_responsavel_wrap').style.display='none'"><span>Não há um responsável formal</span></label>
+        <label class="option"><input type="radio" name="q_responsavel_digital" value="Responsabilidade compartilhada" onclick="document.getElementById('cargo_responsavel_wrap').style.display='none'"><span>A responsabilidade é compartilhada entre a equipe</span></label>
+        <label class="option"><input type="radio" name="q_responsavel_digital" value="Não sei informar" onclick="document.getElementById('cargo_responsavel_wrap').style.display='none'"><span>Não sei informar</span></label>
+      </div>
+      <div id="cargo_responsavel_wrap" style="display:none; margin-top:10px;">
+        <input type="text" id="q_cargo_responsavel" placeholder="Especifique o cargo ou função do responsável...">
+      </div>
+    </div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="prev(2)">← Voltar</button>
       <button class="btn-primary" onclick="next(2)">Continuar →</button>
@@ -629,6 +653,57 @@
         <label class="option"><input type="radio" name="q_agora_especialistas" value="Em uso efetivo no município"><span>Em uso efetivo no município</span></label>
       </div>
     </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">15. Os pacientes apresentam dificuldades para acessar os serviços digitais? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_dificuldade_paciente" value="Nunca"><span>Nunca</span></label>
+        <label class="option"><input type="radio" name="q_dificuldade_paciente" value="Raramente"><span>Raramente</span></label>
+        <label class="option"><input type="radio" name="q_dificuldade_paciente" value="Às vezes"><span>Às vezes</span></label>
+        <label class="option"><input type="radio" name="q_dificuldade_paciente" value="Sempre"><span>Sempre</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">16. O estabelecimento possui política ou protocolo de proteção de dados pessoais (LGPD)? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_lgpd" value="Não possui"><span>Não possui</span></label>
+        <label class="option"><input type="radio" name="q_lgpd" value="Em elaboração"><span>Em elaboração</span></label>
+        <label class="option"><input type="radio" name="q_lgpd" value="Parcialmente implantado"><span>Parcialmente implantado</span></label>
+        <label class="option"><input type="radio" name="q_lgpd" value="Formalmente implantado"><span>Formalmente implantado</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">17. Existe controle de acesso aos sistemas por login individual? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_controle_acesso" value="Login individual sem compartilhamento de senhas"><span>Todos os profissionais têm login individual e não há compartilhamento de senhas</span></label>
+        <label class="option"><input type="radio" name="q_controle_acesso" value="Login individual com compartilhamento de senhas"><span>Todos têm login individual, mas ocorre compartilhamento de senhas</span></label>
+        <label class="option"><input type="radio" name="q_controle_acesso" value="Apenas parte dos profissionais tem login individual"><span>Apenas parte dos profissionais tem login individual</span></label>
+        <label class="option"><input type="radio" name="q_controle_acesso" value="Sem controle formal de acesso"><span>Não há controle formal de acesso por login e senha</span></label>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="field">
+      <label class="field-label">18. Os sistemas do estabelecimento compartilham informações automaticamente com outros serviços de saúde (interoperabilidade)? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_interoperabilidade" value="Sim, com todos os serviços da rede" onclick="document.getElementById('interop_wrap').style.display='block'"><span>Sim, com todos os serviços da rede</span></label>
+        <label class="option"><input type="radio" name="q_interoperabilidade" value="Sim, mas apenas com alguns serviços" onclick="document.getElementById('interop_wrap').style.display='block'"><span>Sim, mas apenas com alguns serviços</span></label>
+        <label class="option"><input type="radio" name="q_interoperabilidade" value="Não" onclick="document.getElementById('interop_wrap').style.display='none'"><span>Não</span></label>
+        <label class="option"><input type="radio" name="q_interoperabilidade" value="Não sei informar" onclick="document.getElementById('interop_wrap').style.display='none'"><span>Não sei informar</span></label>
+      </div>
+      <div id="interop_wrap" style="display:none; margin-top:12px;">
+        <span class="field-hint">Com quais serviços ocorre o compartilhamento? (selecione todos que se aplicam)</span>
+        <div class="options" style="margin-top:6px;">
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="UBS e Atenção Primária"><span>UBS e Atenção Primária</span></label>
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="UPA / Pronto-Socorro"><span>UPA / Pronto-Socorro</span></label>
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="Hospital municipal"><span>Hospital municipal</span></label>
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="Hospital estadual"><span>Hospital estadual</span></label>
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="Hospitais privados"><span>Hospitais privados</span></label>
+          <label class="option"><input type="checkbox" name="q_interop_servicos" value="RNDS (Rede Nacional de Dados em Saúde)"><span>RNDS (Rede Nacional de Dados em Saúde)</span></label>
+        </div>
+      </div>
+    </div>
     <div class="btn-row">
       <button class="btn-secondary" onclick="prev(4)">← Voltar</button>
       <button class="btn-primary" onclick="next(4)">Continuar →</button>
@@ -642,16 +717,13 @@
     <div class="section-desc">Avalia capacidade técnica da equipe, governança e cultura institucional para a transformação digital.</div>
 
     <div class="field">
-      <label class="field-label">15. Cultura organizacional em relação à adoção de tecnologias digitais <span class="req">*</span></label>
-      <div class="scale-wrap">
-        <div class="scale-btns">
-          <label><input type="radio" name="q_cultura" value="1"><span class="scale-num">1</span></label>
-          <label><input type="radio" name="q_cultura" value="2"><span class="scale-num">2</span></label>
-          <label><input type="radio" name="q_cultura" value="3"><span class="scale-num">3</span></label>
-          <label><input type="radio" name="q_cultura" value="4"><span class="scale-num">4</span></label>
-          <label><input type="radio" name="q_cultura" value="5"><span class="scale-num">5</span></label>
-        </div>
-        <div class="scale-anchors"><span>Muito resistente</span><span>Muito receptiva</span></div>
+      <label class="field-label">19. Como você avalia a cultura organizacional e o apoio da gestão para a transformação digital? <span class="req">*</span></label>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_cultura" value="1"><span><strong>Muito baixa</strong> — há resistência às mudanças e pouco incentivo à adoção de tecnologias</span></label>
+        <label class="option"><input type="radio" name="q_cultura" value="2"><span><strong>Baixa</strong> — o apoio à transformação digital é limitado</span></label>
+        <label class="option"><input type="radio" name="q_cultura" value="3"><span><strong>Média</strong> — existem iniciativas pontuais, mas ainda com desafios para sua consolidação</span></label>
+        <label class="option"><input type="radio" name="q_cultura" value="4"><span><strong>Alta</strong> — a unidade incentiva e apoia a adoção de tecnologias digitais</span></label>
+        <label class="option"><input type="radio" name="q_cultura" value="5"><span><strong>Muito alta</strong> — a transformação digital é valorizada e incorporada à cultura da organização</span></label>
       </div>
     </div>
     <hr class="divider">
@@ -666,17 +738,13 @@
     </div>
     <hr class="divider">
     <div class="field">
-      <label class="field-label">17. Letramento digital médio dos profissionais de saúde <span class="req">*</span></label>
-      <span class="field-hint">Entende-se por letramento digital a capacidade da equipe de usar computadores, sistemas e aplicativos no dia a dia do trabalho — preencher prontuário eletrônico, navegar em sistemas de informação, usar e-mail, planilhas, videochamadas, etc.</span>
-      <div class="scale-wrap">
-        <div class="scale-btns">
-          <label><input type="radio" name="q_letramento" value="1"><span class="scale-num">1</span></label>
-          <label><input type="radio" name="q_letramento" value="2"><span class="scale-num">2</span></label>
-          <label><input type="radio" name="q_letramento" value="3"><span class="scale-num">3</span></label>
-          <label><input type="radio" name="q_letramento" value="4"><span class="scale-num">4</span></label>
-          <label><input type="radio" name="q_letramento" value="5"><span class="scale-num">5</span></label>
-        </div>
-        <div class="scale-anchors"><span>Muito baixo</span><span>Muito alto</span></div>
+      <label class="field-label">21. Qual é o nível de letramento digital dos profissionais de saúde do serviço? <span class="req">*</span></label>
+      <span class="field-hint">Letramento digital = capacidade de usar computadores, sistemas e aplicativos no dia a dia — prontuário eletrônico, sistemas de informação, e-mail, planilhas, videochamadas, etc.</span>
+      <div class="options">
+        <label class="option"><input type="radio" name="q_letramento" value="1"><span><strong>Baixo</strong> — a maioria apresenta dificuldades frequentes no uso de computadores e sistemas digitais</span></label>
+        <label class="option"><input type="radio" name="q_letramento" value="3"><span><strong>Médio</strong> — a maioria usa prontuário eletrônico e sistemas rotineiros, mas precisa de suporte para funções mais complexas</span></label>
+        <label class="option"><input type="radio" name="q_letramento" value="4"><span><strong>Alto</strong> — a maioria usa ferramentas digitais com autonomia e se adapta a novas tecnologias</span></label>
+        <label class="option"><input type="radio" name="q_letramento" value="5"><span><strong>Muito alto</strong> — além do uso autônomo, os profissionais apoiam colegas e contribuem para implementação de soluções digitais</span></label>
       </div>
     </div>
     <hr class="divider">
@@ -864,30 +932,46 @@ function calcScore() {
 
 function coletarDados() {
   const r = calcScore();
+  const respResp = getRadio('q_responsavel_digital');
+  const cargoResp = document.getElementById('q_cargo_responsavel');
   return {
     nome_estab: document.getElementById('nome_estab').value,
     municipio: document.getElementById('municipio').value,
     tipo: getRadio('tipo'),
     cargo: document.getElementById('cargo').value,
     email: document.getElementById('email').value,
+    // Infraestrutura
     q_internet: getRadio('q_internet'),
     q_informatizacao: getRadio('q_informatizacao'),
     q_equipamentos: getCheckboxes('q_equipamentos'),
     q_suporte: getRadio('q_suporte'),
+    // Sistemas
     q_sistemas: getCheckboxes('q_sistemas'),
     q_atrasos: getRadio('q_atrasos'),
     q_capacitacao: getRadio('q_capacitacao'),
+    q_freq_capacitacao: getRadio('q_freq_capacitacao'),
+    q_responsavel_digital: respResp,
+    q_cargo_responsavel: (respResp === 'Sim' && cargoResp) ? cargoResp.value : '',
+    // Telessaúde
     q_telessaude: getCheckboxes('q_telessaude'),
     q_obstaculo_tele: getRadio('q_obstaculo_tele'),
     q_impacto_encaminhamentos: getRadio('q_impacto_encaminhamentos'),
+    // Gestão
     q_uso_dados: getRadio('q_uso_dados'),
     q_acesso_paciente: getRadio('q_acesso_paciente'),
     q_comunicacao: getCheckboxes('q_comunicacao'),
     q_agora_especialistas: getRadio('q_agora_especialistas'),
+    q_dificuldade_paciente: getRadio('q_dificuldade_paciente'),
+    q_lgpd: getRadio('q_lgpd'),
+    q_controle_acesso: getRadio('q_controle_acesso'),
+    q_interoperabilidade: getRadio('q_interoperabilidade'),
+    q_interop_servicos: getCheckboxes('q_interop_servicos'),
+    // Organizacional
     q_cultura: getRadio('q_cultura'),
     q_planejamento: getRadio('q_planejamento'),
     q_letramento: getRadio('q_letramento'),
     q_parcerias: getCheckboxes('q_parcerias'),
+    // Qualitativas
     q_desafios: document.getElementById('q_desafios').value,
     q_potencialidades: document.getElementById('q_potencialidades').value,
     q_acao_15rs: getRadio('q_acao_15rs'),
