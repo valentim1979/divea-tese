@@ -124,12 +124,12 @@ def padronizar_profissao(valor):
         return 'Técnico em Vigilância em Saúde'
     if 'farmac' in v:
         return 'Farmacêutico(a)'
+    if 'biomedic' in v:
+        return 'Biomédico(a)'
     if 'medic' in v and 'veterin' in v:
         return 'Médico(a) veterinário(a)'
     if 'medic' in v:
         return 'Médico(a)'
-    if 'biomedic' in v:
-        return 'Biomédico(a)'
     return str(valor).strip()
 
 
