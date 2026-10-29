@@ -196,6 +196,7 @@ padronizar_profissao <- por_valor(function(x, v) {
   if (tem(v, "nutricion"))                     return("Nutricionista")
   if (tem(v, "dentista") || tem(v, "odontolog")) return("Cirurgião(ã)-dentista")
   if (tem(v, "administrativ"))                 return("Auxiliar/assistente administrativo")
+  if (tem(v, "digitador"))                     return("Digitador(a)")
   trimws(x)
 })
 

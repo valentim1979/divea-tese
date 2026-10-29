@@ -186,6 +186,8 @@ def padronizar_profissao(valor):
         return 'Cirurgião(ã)-dentista'
     if 'administrativ' in v:
         return 'Auxiliar/assistente administrativo'
+    if 'digitador' in v:
+        return 'Digitador(a)'
     return str(valor).strip()
 
 
