@@ -1,0 +1,11 @@
+Nome,SE_inicio,Idade,Sexo,Setor,Classificacao,Vinculo,Camada,Latitude,Longitude
+HA-21,6,50,M,C,Confirmado,Usa água do P1,Casos SE 6-8,-23.400201,-51.915234
+HA-22,6,29,F,C,Confirmado,Usa água do P1,Casos SE 6-8,-23.400416,-51.91485
+HA-23,6,28,F,B,Confirmado,Mãe de criança da creche P2,Casos SE 6-8,-23.400433,-51.918889
+HA-24,6,31,M,B,Confirmado,Pai de criança da creche P2,Casos SE 6-8,-23.400635,-51.9174
+HA-25,7,26,F,B,Confirmado,Mãe de criança da creche P2,Casos SE 6-8,-23.401318,-51.918009
+HA-26,7,4,M,B,Confirmado,"Criança da creche P2, com icterícia",Casos SE 6-8,-23.400247,-51.918555
+HA-27,7,35,F,A,Confirmado,Funcionária da creche P2 (troca fraldas),Casos SE 6-8,-23.400375,-51.919923
+HA-28,7,60,F,B,Suspeito,Avó que cuida de neto da creche P2,Casos SE 6-8,-23.399396,-51.917946
+HA-29,8,30,M,A,Confirmado,Mora com HA-27,Casos SE 6-8,-23.39962,-51.921572
+HA-30,8,33,F,F,Confirmado,Mãe de criança da creche P2,Casos SE 6-8,-23.403556,-51.921984

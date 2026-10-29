@@ -1,0 +1,13 @@
+Nome,SE_inicio,Idade,Sexo,Setor,Classificacao,Vinculo,Camada,Latitude,Longitude
+HA-01,1,34,F,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.400425,-51.915946
+HA-02,1,41,M,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.401196,-51.915024
+HA-03,2,8,M,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.399823,-51.915985
+HA-04,2,52,F,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.400541,-51.914814
+HA-05,2,27,M,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.400523,-51.914386
+HA-06,2,15,F,D,Confirmado,Estuda na P3; almoça na casa da avó no setor C,Casos SE 1-3,-23.403693,-51.91451
+HA-07,3,34,F,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.400606,-51.914462
+HA-08,3,19,M,C,Suspeito,Usa água do P1,Casos SE 1-3,-23.400666,-51.915662
+HA-09,3,63,F,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.401102,-51.915966
+HA-10,3,11,F,C,Confirmado,Usa água do P1,Casos SE 1-3,-23.401098,-51.91517
+HA-11,3,30,M,D,Confirmado,Trabalha numa oficina no setor C,Casos SE 1-3,-23.403501,-51.914617
+HA-12,3,45,F,B,Suspeito,Visita parentes no setor C toda semana,Casos SE 1-3,-23.399884,-51.918669
